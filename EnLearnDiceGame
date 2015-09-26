@@ -1,0 +1,203 @@
+package harrykim.interviews.enlearn;
+/**
+ * Created by justfig on 9/23/2015.
+ */
+
+public class EnLearnDiceGame {
+    String[] categories = {
+                            "Ones", "Twos", "Threes", "Fours", "Fives", "Sixes", "Sevens", "Eights",
+                            "ThreeOfAKind", "FourOfAKind", "AllOfAKind", "NoneOfAKind",
+                            "FullHouse", "SmallStraight", "LargeStraight"
+                            };
+    public static void main(String[] args) {
+        EnLearnDiceGame e = new EnLearnDiceGame();
+        e.Play();
+    }
+
+    public void Play() {
+        int[] rollOutcome = Roll(new int[] {5, 2, 3, 4, 5});
+        for(int i =0; i<rollOutcome.length; i++) {
+            System.out.print(rollOutcome[i] + " ");
+        }
+        System.out.println();
+        System.out.println("Your Ones Score was: " + CategoryScore("Ones", rollOutcome)); //Add a wild card here
+        System.out.println("Your Chance Score was: " + CategoryScore("NoneOfAKind", rollOutcome));
+    }
+
+    public int[] Roll(int[] roll) {
+        int[] rollOutcome = new int[8]; //number of faces of the die
+        for (int i:roll) {
+            rollOutcome[i - 1]++;
+        }
+        return rollOutcome;
+    }
+    public int[] Roll() {
+//      if no roll input, randomize roll
+        int[] roll = new int[5];
+        for (int i=0; i< roll.length; i++) {
+            roll[i] = (int) Math.random() * 5 + 1;
+        }
+
+        int[] rollOutcome = new int[8]; //number of faces of the die
+        for (int i:roll) {
+            rollOutcome[i - 1]++;
+        }
+        return rollOutcome;
+    }
+
+    public int CategoryScore(String category, int[] RollOutcome) {
+        int score = 0;
+        if (category.equals("Ones")){
+            score = OnesScore(RollOutcome);
+        }
+        if (category.equals("Twos")){
+            score = TwosScore(RollOutcome);
+        }
+        if (category.equals("Threes")) {
+            score = ThreesScore(RollOutcome);
+        }
+        if (category.equals("Fours")) {
+            score = FoursScore(RollOutcome);
+        }
+        if (category.equals("Fives")) {
+            score = FivesScore(RollOutcome);
+        }
+        if (category.equals("Sixes")) {
+            score = SixesScore(RollOutcome);
+        }
+        if (category.equals("Sevens")) {
+            score = SevensScore(RollOutcome);
+        }
+        if (category.equals("Eights")) {
+            score = EightsScore(RollOutcome);
+        }
+        if (category.equals("ThreeOfAKind")) {
+            score = ThreeOfAKindScore(RollOutcome);
+        }
+        if (category.equals("FourOfAKind")) {
+            score = FourOfAKindScore(RollOutcome);
+        }
+        if (category.equals("AllOfAKind")) {
+            score = AllOfAKindScore(RollOutcome);
+        }
+        if (category.equals("NoneOfAKind")) {
+            score = NoneOfAKindScore(RollOutcome);
+        }
+        if (category.equals("FullHouse")) {
+            score = FullHouseScore(RollOutcome);
+        }
+        if (category.equals("SmallStraight")) {
+            score = SmallStraightScore(RollOutcome);
+        }
+        if (category.equals("LargeStraight")) {
+            score = LargeStraightScore(RollOutcome);
+        }
+        if (category.equals("Chance")) {
+            score = ChanceScore(RollOutcome);
+        }
+        return score;
+    }
+
+
+
+
+
+    public int OnesScore(int[] RollOutcome) {
+        return RollOutcome[0];
+    }
+    public int TwosScore(int[] RollOutcome) {
+        return RollOutcome[1]*2;
+    }
+    public int ThreesScore(int[] RollOutcome) {
+        return RollOutcome[2]*3;
+    }
+    public int FoursScore(int[] RollOutcome) {
+        return RollOutcome[3]*4;
+    }
+    public int FivesScore(int[] RollOutcome) {
+        return RollOutcome[4]*5;
+    }
+    public int SixesScore(int[] RollOutcome) {
+        return RollOutcome[5]*6;
+    }
+    public int SevensScore(int[] RollOutcome) {
+        return RollOutcome[6]*7;
+    }
+    public int EightsScore(int[] RollOutcome) {
+        return RollOutcome[7]*8;
+    }
+    public int ThreeOfAKindScore(int[] RollOutcome) {
+        int hasThreeOfAKind = 0;
+        int threeOfAKindScore = 0;
+        for (int i=0; i<RollOutcome.length; i++) {
+            threeOfAKindScore = threeOfAKindScore + RollOutcome[i] * (i+1);
+            if (RollOutcome[i] >= 3) {
+                hasThreeOfAKind = 1;
+            }
+        }
+        return hasThreeOfAKind * threeOfAKindScore;
+    }
+    public int FourOfAKindScore(int[] RollOutcome) {
+        int hasFourOfAKind = 0;
+        int fourOfAKindScore = 0;
+        for (int i=0; i<RollOutcome.length; i++) {
+            fourOfAKindScore = fourOfAKindScore + RollOutcome[i] * (i+1);
+            if (i>=4) {
+                hasFourOfAKind = 1;
+            }
+        }
+        return hasFourOfAKind * fourOfAKindScore;
+    }
+    public int AllOfAKindScore(int[] RollOutcome) {
+        int hasAllOfAKind = 0;
+        for (int i:RollOutcome) {
+            if (i>=5) {
+                hasAllOfAKind = 1;
+            }
+        }
+        return hasAllOfAKind * 50;
+    }
+    public int NoneOfAKindScore(int[] RollOutcome) {
+        int hasNoneOfAKind = 1;
+        for (int i:RollOutcome) {
+            if(i>0) {
+                hasNoneOfAKind = hasNoneOfAKind * i;
+            }
+        }
+        if (hasNoneOfAKind != 1) {
+            hasNoneOfAKind = 0;
+        }
+        return hasNoneOfAKind * 40;
+    }
+    public int FullHouseScore(int[] RollOutcome) {
+        int hasTwoOfAKind = 0;
+        int hasThreeOfAKind = 0;
+        for (int i:RollOutcome) {
+            if (i == 2) {
+                hasTwoOfAKind = 1;
+            }
+            if (i == 3) {
+                hasThreeOfAKind = 1;
+            }
+        }
+        int hasFullHouse = hasTwoOfAKind * hasThreeOfAKind;
+        return hasFullHouse * 25;
+    }
+    public int SmallStraightScore(int[] RollOutcome) {
+        int hasSmallStraight = 0;
+        //Add logic for determining if SmallStraight
+        return hasSmallStraight * 30;
+    }
+    public int LargeStraightScore(int[] RollOutcome) {
+        int hasLargeStraight = 0;
+        //Add logic for determining if SmallStraight
+        return hasLargeStraight * 40;
+    }
+    public int ChanceScore(int[] RollOutcome) {
+        int chance = 0;
+        for (int i=0; i<RollOutcome.length; i++) {
+            chance = chance + RollOutcome[i] * (i+1);
+        }
+        return chance;
+    }
+}
