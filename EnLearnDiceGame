@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class EnLearnDiceGame {
 	//This class rolls and scores 5 dice. Combinations are similar to Poker.
+	//Get RID OF ALL THE COMMENTS!
+	//ASDFAWERADVAESRAWER
 
     public static void main(String[] args) {
         EnLearnDiceGame e = new EnLearnDiceGame();
